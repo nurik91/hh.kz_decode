@@ -27,7 +27,7 @@ app.use(require('./app/vacancy/routes'))
 app.use(require('./app/applies/routes'))
 
 
-app.listen(3000, () => { // функция listen принимает два аргумента, порт и функцию
+app.listen(3001, () => { // функция listen принимает два аргумента, порт и функцию
     console.log("Server is listening on port 3001");
 })
 
