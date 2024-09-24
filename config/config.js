@@ -21,6 +21,6 @@ module.exports = {
                 ca: fs.readFileSync(path.resolve("config", "ca-certificate.crt")),
             },
         }
-    }
+    },
 
 }

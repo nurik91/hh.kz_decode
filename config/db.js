@@ -2,7 +2,15 @@ const { Sequelize } = require('sequelize');
 const dbConf = require('./config')
 const fs = require('fs')
 const path = require("path")
-let sequelize;
+
+// const sequelize = new Sequelize('database', 'username', 'password', {
+//     host: '159.65.12.168',
+//     port: 25060,
+//     dialect: 'postgres',
+//     dialectOptions: {
+//       connectTimeout: 10000 // 10 seconds
+//     }
+//   });
 
 // console.log(process.env);
 
@@ -17,6 +25,7 @@ if(process.env.NODE_ENV === "production"){
             ssl: {
                 ca: fs.readFileSync(path.resolve("config", "ca-certificate.crt")),
             },
+            connectTimeout: 10000 // 10 seconds
         }
     });
     
@@ -38,5 +47,6 @@ sequelize
     .catch(((error) => {
         console.error('Unable to connect to the database', error);
     }))
+
 
 module.exports = sequelize;
