@@ -26,6 +26,7 @@ if(process.env.NODE_ENV === "production"){
                 ca: fs.readFileSync(path.resolve("config", "ca-certificate.crt")),
             },
             connectTimeout: 10000 // 10 seconds
+            
         }
     });
     
