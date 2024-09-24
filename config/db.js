@@ -3,16 +3,7 @@ const dbConf = require('./config')
 const fs = require('fs')
 const path = require("path")
 let sequelize;
-// const sequelize = new Sequelize('database', 'username', 'password', {
-//     host: '159.65.12.168',
-//     port: 25060,
-//     dialect: 'postgres',
-//     dialectOptions: {
-//       connectTimeout: 10000 // 10 seconds
-//     }
-//   });
 
-// console.log(process.env);
 
 if(process.env.NODE_ENV === "production"){
     console.log("here");
@@ -27,7 +18,7 @@ if(process.env.NODE_ENV === "production"){
                 // rejectUnauthorized: false, // Add this if needed, but ensure security
                 ca: fs.readFileSync(path.resolve("config", "ca-certificate.crt")),
             },
-            // connectTimeout: 10000 // 10 seconds
+            connectTimeout: 10000 // 10 seconds
             
         }
     });
