@@ -6,11 +6,12 @@ const passport = require('passport');
 
 
 app.use(logger('dev'))
+app.use(bodyParser.urlencoded({ extended: true })); // this
+app.use(bodyParser.json()); // this
 app.use(express.urlencoded()) // для сериализации данных формата xml
 app.use(express.json()) // для сериализации данных формата json
 app.use(express.static(__dirname + "/public")) // чтобы файлы(картинки) были доступны в форнтенде
-app.use(bodyParser.urlencoded({ extended: true })); // this
-app.use(bodyParser.json()); // this
+
 
 app.use(passport.initialize());
 
