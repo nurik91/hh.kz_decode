@@ -14,12 +14,8 @@ if(process.env.NODE_ENV === "production"){
         port: dbConf.production.port,
         dialectOptions: {
             ssl: {
-                // require: true, // this
-                // rejectUnauthorized: false, // Add this if needed, but ensure security
                 ca: fs.readFileSync(path.resolve("config", "ca-certificate.crt")),
-            },
-            connectTimeout: 10000 // 10 seconds
-            
+            }, 
         }
     });
     
