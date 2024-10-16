@@ -5,7 +5,16 @@ const passport = require('passport');
 
 const app = express(); // переменная которая использует фреймворк express
 
-app.use(cors())
+const corsOptions = {
+    origin: 'https://example.com',
+    methods: ['GET', 'POST'],     
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,              
+  };
+
+app.use(cors(corsOptions));
+
+
 app.use(logger('dev'))
 app.use(express.urlencoded()) // для сериализации данных формата xml
 app.use(express.json()) // для сериализации данных формата json
