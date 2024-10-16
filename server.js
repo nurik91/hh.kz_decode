@@ -6,11 +6,30 @@ const passport = require('passport');
 const app = express(); // переменная которая использует фреймворк express
 
 app.use(logger('dev'))
-app.use(cors())
+
+// Настройка CORS с разрешением только для конкретного домена
+const corsOptions = {
+    origin: 'http://localhost:3000', // Ваш фронтенд
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Разрешенные методы
+    allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
+    credentials: true // Если вы используете куки или другие креденшелы
+};
+  
+app.use(cors(corsOptions));
+
+app.options('*', cors(corsOptions)); // Разрешаем pre-flight запросы для всех маршрутов
+
 app.use(express.urlencoded()) // для сериализации данных формата xml
 app.use(express.json()) // для сериализации данных формата json
 app.use(express.static(__dirname + "/public")) // чтобы файлы(картинки) были доступны в форнтенде
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Устанавливаем вручную
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
+  
 
 app.use(passport.initialize());
 
