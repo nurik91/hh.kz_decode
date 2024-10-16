@@ -5,8 +5,8 @@ const passport = require('passport');
 
 const app = express(); // переменная которая использует фреймворк express
 
-app.use(logger('dev'))
 app.use(cors())
+app.use(logger('dev'))
 app.use(express.urlencoded()) // для сериализации данных формата xml
 app.use(express.json()) // для сериализации данных формата json
 app.use(express.static(__dirname + "/public")) // чтобы файлы(картинки) были доступны в форнтенде
