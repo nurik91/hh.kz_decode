@@ -1,4 +1,4 @@
-const express = require('express'); // -	Чтобы подключит какие-то зависимости используем функцию “require” 
+const express = require('express'); // -    Чтобы подключит какие-то зависимости используем функцию “require” 
 const logger = require('morgan')
 const cors = require("cors")
 const passport = require('passport');
@@ -6,30 +6,10 @@ const passport = require('passport');
 const app = express(); // переменная которая использует фреймворк express
 
 app.use(logger('dev'))
-
-// Настройка CORS с разрешением только для конкретного домена
-const corsOptions = {
-    origin: 'http://localhost:3000', // Ваш фронтенд
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Разрешенные методы
-    allowedHeaders: ['Content-Type', 'Authorization'], // Разрешенные заголовки
-    credentials: true // Если вы используете куки или другие креденшелы
-};
-  
-app.use(cors(corsOptions));
-
-app.options('*', cors(corsOptions)); // Разрешаем pre-flight запросы для всех маршрутов
-
+app.use(cors())
 app.use(express.urlencoded()) // для сериализации данных формата xml
 app.use(express.json()) // для сериализации данных формата json
 app.use(express.static(__dirname + "/public")) // чтобы файлы(картинки) были доступны в форнтенде
-
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Устанавливаем вручную
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next();
-});
-  
 
 app.use(passport.initialize());
 
@@ -44,16 +24,8 @@ app.use(require('./app/specializations/routes'))
 app.use(require('./app/vacancy/routes'))
 app.use(require('./app/applies/routes'))
 
-
 app.listen(3001, () => { // функция listen принимает два аргумента, порт и функцию
     console.log("Server is listening on port 3001");
 })
 
 // eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJudXJsaWJla251cm1haGFub3ZAZ21haWwuY29tIiwiZnVsbF9uYW1lIjpudWxsLCJwaG9uZSI6bnVsbCwicm9sZSI6eyJyb2xlIjoiZW1wbG95ZWUifSwiaWF0IjoxNzI0MDA0MjExLCJleHAiOjE3NTU1NDAyMTF9.V_1gYJCFVQJ_4YJGCKsaMSYlwvM_Mq1kgxHSjyn_IAc
-
-
-
-
-
-
-
