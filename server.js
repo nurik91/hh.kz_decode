@@ -6,11 +6,11 @@ const passport = require('passport');
 const app = express(); // переменная которая использует фреймворк express
 
 const corsOptions = {
-    origin: ['*'],
-    methods: ['GET', 'POST'],     
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,              
-  };
+    credentials: true, // Разрешить передачу куки
+};
 
 app.use(cors(corsOptions));
 
