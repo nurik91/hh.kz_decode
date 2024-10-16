@@ -1,40 +1,43 @@
-const express = require('express'); // -    Чтобы подключит какие-то зависимости используем функцию “require” 
-const logger = require('morgan')
-const cors = require("cors")
+const express = require('express'); // Import dependencies
+const logger = require('morgan');
+const cors = require("cors");
 const passport = require('passport');
 
-const app = express(); // переменная которая использует фреймворк express
+const app = express(); // Initialize express app
 
+// CORS configuration options
 const corsOptions = {
-    origin: 'http://localhost:3000',
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, // Разрешить передачу куки
+    origin: 'http://localhost:3000', // Allow requests from localhost:3000
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed HTTP methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    credentials: true, // Allow credentials (cookies, authorization headers)
 };
 
-app.use(cors(corsOptions));
+// Middleware
+app.use(logger('dev')); // Log incoming requests
+app.use(cors(corsOptions)); // Enable CORS with the defined options
+app.options('*', cors(corsOptions)); // Handle preflight requests for all routes
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded data (form data)
+app.use(express.json()); // Parse incoming JSON data
+app.use(express.static(__dirname + "/public")); // Serve static files from the 'public' folder
 
-
-app.use(logger('dev'))
-app.use(express.urlencoded()) // для сериализации данных формата xml
-app.use(express.json()) // для сериализации данных формата json
-app.use(express.static(__dirname + "/public")) // чтобы файлы(картинки) были доступны в форнтенде
-
+// Initialize Passport.js
 app.use(passport.initialize());
 
-require('./app/auth/passport')
-app.use(require('./app/auth/routes'))
-app.use(require('./app/region/routes'))
-app.use(require('./app/skills/routes'))
-app.use(require('./app/employment-type/routes'))
-app.use(require('./app/languages/routes'))
-app.use(require('./app/resume/routes'))
-app.use(require('./app/specializations/routes'))
-app.use(require('./app/vacancy/routes'))
-app.use(require('./app/applies/routes'))
+// Route imports
+require('./app/auth/passport');
+app.use(require('./app/auth/routes'));
+app.use(require('./app/region/routes'));
+app.use(require('./app/skills/routes'));
+app.use(require('./app/employment-type/routes'));
+app.use(require('./app/languages/routes'));
+app.use(require('./app/resume/routes'));
+app.use(require('./app/specializations/routes'));
+app.use(require('./app/vacancy/routes'));
+app.use(require('./app/applies/routes'));
 
-app.listen(3001, () => { // функция listen принимает два аргумента, порт и функцию
+// Start server on port 3001
+app.listen(3001, () => {
     console.log("Server is listening on port 3001");
-})
+});
 
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJudXJsaWJla251cm1haGFub3ZAZ21haWwuY29tIiwiZnVsbF9uYW1lIjpudWxsLCJwaG9uZSI6bnVsbCwicm9sZSI6eyJyb2xlIjoiZW1wbG95ZWUifSwiaWF0IjoxNzI0MDA0MjExLCJleHAiOjE3NTU1NDAyMTF9.V_1gYJCFVQJ_4YJGCKsaMSYlwvM_Mq1kgxHSjyn_IAc
